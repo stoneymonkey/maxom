@@ -1,0 +1,24 @@
+<h1>Listing tests</h1>
+
+<table>
+  <tr>
+<% for column in Test.content_columns %>
+    <th><%= column.human_name %></th>
+<% end %>
+  </tr>
+  
+<% for test in @tests %>
+  <tr>
+  <% for column in Test.content_columns %>
+    <td><%=h test[column.name] %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => test.id %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => test.id %></td>
+    <td><%= link_to 'Destroy', :action => 'destroy', :id => test.id %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New test', :action => 'new' %>

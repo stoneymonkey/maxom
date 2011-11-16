@@ -1,0 +1,41 @@
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/style.css">
+<title>Expense and Income for <%= @params[:year] %></title>
+
+<h3>Expense and Income for <%= @params[:acc] %>&nbsp;in the year&nbsp;<%= @params[:year] %>.
+</h3>
+<% @exp_totals.length %>
+<table class="servicesT">
+<tr class="servHd">
+<td></td>
+<td>Jan</td>
+<td>Feb</td>
+<td>Mar</td>
+<td>Apr</td>
+<td>May</td>
+<td>Jun</td>
+<td>Jul</td>
+<td>Aug</td>
+<td>Sep</td>
+<td>Oct</td>
+<td>Nov</td>
+<td>Dec</td>
+</tr>
+<% 
+  for i in 0..@categories.length-1
+%>
+<tr>
+
+   <td>
+    <%= @categories[i].Account %>
+
+   </td>
+  <% for x in 1..12 %>
+   <td>
+   <%= link_to("#{number_to_currency(@exp_totals[i,x])}", :controller => "maxom", :action => "show", :cat => "#{i+1}", :month => "#{x}", :year => "#{@params[:year]}", :acc => "#{@params[:acc]}") %>
+   </td>
+<% end %>
+</tr>
+<% end %>
+</table>
+
+

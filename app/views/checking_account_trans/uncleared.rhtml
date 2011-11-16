@@ -1,0 +1,23 @@
+<title>Uncleared items in Account  <%= params[:acc] %></title>
+ <h3>Uncleared items in Account  <%= params[:acc] %></h3>
+<table border="1">
+   <tr>
+      <td>ID</td>
+      <td>Transaction Date</td>
+      <td>Clear Date</td>
+	  <td>Description</td>
+      <td>Amount</td>
+      <td>Ref / Chk #</td>
+
+   </tr>
+<% @items.each do |item| %>
+      <tr>
+         <td><%= link_to "#{item.id}", :controller => "maxom", :action => "edit", :acc => "#{params[:acc]}", :id => "#{item.id}" %></td>
+         <td><%= item.transaction_date %></td>
+         <td><%= item.clear_date %></td>
+		 <td><%= item.description %></td>
+         <td><%= item.amount %></td>
+         <td><%= item.ref_chk %></td>
+      </tr>
+<% end %>
+</table>

@@ -1,0 +1,19 @@
+<table border="1">
+   <tr>
+   <% @items.each do |item| %>
+      <td><%= item.id %></td>
+      <td><%= item.transaction_date %></td>
+      <td><%= item.clear_date %></td>
+      <td><%= number_to_currency(item.amount) %></td>
+      <td><%= item.ref_chk %></td>
+      <td><%= item.trans_type %></td>
+      <td nowrap><%= item.payee %></td>
+      <td nowrap><%= item.description %></td>
+      <td nowrap><%= item.account_type %></td>
+      <td><%= item.reconciled %></td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+</table>
+
+<%= @test %>

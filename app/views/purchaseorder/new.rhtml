@@ -1,0 +1,112 @@
+<!-- script type="javascipt 1.0" src="../javascripts/libForm.js" / -->
+<!-- script type="javascipt 1.0" src="../javascripts/purchaseorder.js" / -->
+
+<script>
+
+function submitIt(){
+	document.forms['po'].submit();
+}
+
+function getSelectedObj(form)
+{
+ var listObj = form;
+ var listlength = listObj.length;
+ for (var i = 0; i < listlength; i++) 
+ {
+  if (listObj.options[i].selected)
+  {
+   return listObj.options[i].value;
+  }
+ }
+ return null;
+}
+
+function updateEmployeeID(option)
+{
+  var  emp = getSelectedObj(option);
+  document.getElementById("employee_id").value = emp;
+}
+
+function updatePayableID(option)
+{
+  var  emp = getSelectedObj(option);
+  document.getElementById("payable_id").value = emp;
+}
+
+</script>
+
+<!-- img src="../images/IM000516.JPG" / -->
+
+ <h1>New Purchase Order</h1>
+
+<form action="purchaseorder/update" method="POST" name="po">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="65%">
+  <TR>
+  <TD >Order Date</TD>
+  <TD >Vendor</TD>
+  <TD >Vendor ID</TD>
+
+  </TR>
+  <TR>
+  <TD nowrap><%= date_select( "purchaseorder", "order_date",  :start_year => 2002 ) %></TD>
+  <TD>
+     <%= tag("select", {"name" => "payable[Account_Name]", "onChange" => "updatePayableID(this)"}) %>
+     <option></option>
+   <% for vendor in @vendors %>
+     <option value="<%= vendor.id %>"><%= vendor.Account_Name %></option>
+   <% end %>
+  </TD>
+  <TD><%= tag("input", { "type" => "text", "name" => "payable[id]", "ID" => "payable_id" }) %></TD>
+ </TR>
+ <TR>
+  <TD >Employee</TD>
+  <TD >Employee ID</TD>
+  <TD >Terms</TD>
+  <TD >Shipment</TD>
+  <TD  nowrap>Workorder ID</TD>
+  <TD  nowrap>Estimated Cost</TD>
+ </TR>
+ <TR>
+  <TD>
+    <%= tag("select", {"name" => "employee.id", "onChange" => "updateEmployeeID(this);"}) %>
+     <option></option>
+   <% for employee in @employees %>
+     <option value="<%= employee.id %>"><%= employee.First_Name %> <%= employee.Last_Name %></option>
+    <% end %> 
+  </TD>
+  <TD><%= tag("input", {"name" => "employee['id']", "size" => "4", "ID" => "employee_id"}) %></TD>
+  <TD>
+     <select name="purchaseorder[terms]">
+        <option></option>
+        <option>C.O.D.</option>
+        <option>Net 30</option>
+     </select>
+  </TD>
+  <TD>
+     <select name="purchaseorder[shipment]">
+        <option></option>
+        <option>UPS Ground</option>
+        <option>Over Night</option>
+     </select>
+  </TD>
+  <TD><%= tag("input", {"name" => "workorder_id", "size" => "6"}) %></TD>
+  <TD><%= tag("input", {"name" => "estimated_cost", "size" => "6"}) %></TD>
+  </TR>
+</TABLE>
+<%= tag("hr") %>
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" WIDTH="65%">
+  <TR><input type="hidden" name="purchase_id" value="" />
+  <TD bgcolor="grey">Qty</TD>
+  <TD bgcolor="grey">Item Num</TD>
+  <TD bgcolor="grey">Description</TD>
+  </TR>
+  <TR>
+  <TD><%= tag("input", {"name" => "po_items[quantity]", "size" => "6"}) %></TD>
+  <TD><%= tag("input", {"name" => "po_items[item_num]", "size" => "32"}) %></TD>
+  <TD><%= tag("input", {"name" => "po_items[description]", "size" => "48"}) %></TD>
+  </TR>
+</TABLE>
+<p>
+<%= tag("input", "type" => "button", "name" => "submit", "value" => "Submit", "onClick" => "submitIt();") %> 
+</p>
+</form>

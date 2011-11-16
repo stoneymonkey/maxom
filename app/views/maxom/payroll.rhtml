@@ -1,0 +1,132 @@
+<table border="1">
+   <tr>
+     <% @col_names.each do |name| %>
+      <td>
+         <b><%= link_to("#{name.capitalize}", :controller => "maxom",
+					:action => "payroll",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month]}",
+					:sort => "#{name}")
+	%></b>
+      </td>
+     <% end %>
+   </tr>
+<tr>
+<tr><td bgcolor="#DOFFFF">Aaron</td></tr>
+<% @aaron_bofw.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "bofw", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<% @aaron_cvcb.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "cvcb", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<tr><td>Ben</td></tr>
+<% @ben_bofw.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap>
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "bofw", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap>
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<% @ben_cvcb.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap>
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "cvcb", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap>
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<tr><td bgcolor="#DOFFFF">Gary</td></tr>
+<% @gary_bofw.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "bofw", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<% @gary_cvcb.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "cvcb", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap bgcolor="#DOFFFF">
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<tr><td>Larry</td></tr>
+<% @larry_bofw.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap>
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "bofw", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap>
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+<% @larry_cvcb.each do |item| %>
+	<% for i in 0...@col_names.length %>
+		<% if i == 0 %>
+			<td nowrap>
+				<%= link_to "#{item.attributes[@col_names[i]]}", :action => "edit", :acc => "cvcb", :id => "#{item.attributes[@col_names[i]]}" %>
+			</td>
+		<% else %>
+			<td nowrap>
+				<%= item.attributes[@col_names[i]] %>
+			</td>
+		<% end %>
+	<% end %>
+   </tr>
+<% end %>
+</table>

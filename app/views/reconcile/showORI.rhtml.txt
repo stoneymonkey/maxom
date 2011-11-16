@@ -1,0 +1,140 @@
+<title>Showing <%= params[:view].capitalize %> for <%= params[:month] %> of <%= params[:year] %></title>
+
+<%= javascript_include_tag "prototype" %>
+<script src="/js/libForm.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/style.css">
+
+<script>
+function getSelectedObj(form)
+{
+ var listObj = form;
+ var listlength = listObj.length;
+ for (var i = 0; i < listlength; i++) 
+ {
+  if (listObj.options[i].selected)
+  {
+   return listObj.options[i].value;
+  }
+ }
+ return null;
+} //end of function getSelectedObj
+
+function redirect_to(){
+   var year = getSelectedObj(document.forms[0].year);
+   var month = getSelectedObj(document.forms[0].month);
+   var acc = getSelectedObj(document.forms[0].acc);
+   var view = getSelectedObj(document.forms[0].view);
+   var sort = document.forms[0].sort.value;
+   location.replace("http://"+location.hostname+":"+location.port+"/<%= params[:controller] %>/<%= params[:action] %>/"+acc+"/"+year+"/"+month+"/"+view+"?sort="+sort)
+}
+
+	function check_all(){
+		document.forms[0].to_be_reconciled[1576].checked = true;
+	}
+
+</script>
+
+<%= start_form_tag :action => 'reconcile', :id => @month_rec%>
+   <input id="sort" name="sort" type="hidden" value="<%= params[:sort] %>" />
+Viewing&nbsp;
+        <select name="acc">
+        	<%= options_for_select({"Bank of the West" => "bofw", "Central Valley Comm. Bank" => "cvcb"}, "#{params[:acc]}") %>
+        </select>
+&nbsp;
+	<select name="view">
+                <option></option>
+		<%= options_for_select({"Debits" => "debits", "Deposits" => "deposits", "Checks" => "checks"}, "#{params[:view]}") %>
+	</select>
+for 
+	<select name="month">
+		<%= options_for_select({"January" => "1",
+					"February" => "2",
+					"March" => "3",
+					"April" => "4",
+					"May" => "5",
+					"June" => "6",
+					"July" => "7",
+					"August" => "8",
+					"September" => "9",
+					"October" => "10",
+					"November" => "11",
+					"December" => "12"},"#{params[:month]}") %></select>
+&nbsp;of&nbsp;
+	<select name="year">
+                
+		<%= options_for_select(["2003", "2004", "2005", "2006"], "#{params[:year]}") %>
+	</select>.
+	&nbsp;<a href="javascript:void(0)" onClick="redirect_to()">New View</a>
+
+<hr />
+&nbsp;Total <%= params[:view] %>&nbsp;<%= number_to_currency(@total) %>.&nbsp;Total <em>unreconciled</em> transactions: <%= @items.length %>.
+<table border="1">
+   <tr>
+      <td>
+        &nbsp;
+      </td>
+     <% @col_names.each do |name| %>
+      <td>
+         <b><%= link_to("#{name.capitalize}", :controller => "reconcile",
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month]}",
+					:sort => "#{name}")
+	%></b>
+      </td>
+     <% end %>
+   </tr>
+
+   <tr>	
+   <% @items.each do |item| %>
+      <td>
+        <%= check_box("to_be_reconciled", "#{item.id}", {}, "yes", "no") %>
+      </td>
+      <td>
+          <%= link_to "#{item.id}", :controller => "maxom", :action => "edit", :acc => "#{params[:acc]}", :id => "#{item.id}" %>
+      </td>
+      <td>
+         <%= item.attributes['transaction_date'] %>
+     </td>
+      <td>
+         <%= item.attributes[@col_names[2]] %>
+      </td>
+      <td>
+         <%=  number_to_currency(item.amount) %>
+      </td>
+      <td>
+         <%= item.ref_chk %>
+      </td>
+      <td>
+         <%= item.trans_type %>
+      </td>
+      <td nowrap>
+         <%= item.payee %>
+      </td>
+      <td nowrap>
+         <%= item.description %>
+      </td>
+      <td nowrap>
+		<%= item.account_type %>
+         </select>
+
+      </td>
+      <td>
+         <%= item.reconciled %>
+      </td>
+      &nbsp;
+    </tr>
+<% end %>
+    <tr>
+     <% 10.times do %>
+        <td>&nbsp;</td>
+     <% end %>
+    <td><input type="button" name="CheckAll" value="Check All" onClick="check_all()" /></td>
+    </tr>
+</table>
+<input name="submit" value="submit" type="submit"/>
+<%= end_form_tag %>
+<%= Time.now %>

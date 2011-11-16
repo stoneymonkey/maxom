@@ -1,0 +1,4 @@
+<%= debug(params) %>
+
+<br />
+<%= params[:item][:id] %>

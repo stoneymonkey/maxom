@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Purchase Order Printout Display</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="#FFFFFF">
+<p><font size="5">Lighting Resources Purchase Order</font></p>
+<table width="87%" border="0">
+  <tr>
+    <td width="35%"><b>Purchase Order No.</b> <%= @po.id %></td>
+    <td width="30%"><b>Seller Permit No</b>. 22 816988</td>
+    <td width="35%"><b>Order Date:</b> <%= @po.order_date %></td>
+  </tr>
+</table>
+<table width="87%" border="0">
+  <tr>
+    <td width="38%"><b>Requested By:</b>
+    <!-- Order By -->
+    <%= @po.employee.First_Name %>&nbsp;<%= @po.employee.Last_Name %>
+
+    </td>
+    <td width="27%"><b>Account No.</b> <%= @po.payable.Account_Number %></td>
+    <td width="35%"><b>Ship To:</b> Lighting Resources</td>
+  </tr>
+  <tr>
+    <td width="38%">&nbsp;</td>
+    <td width="27%">&nbsp;</td>
+    <td width="35%"><b>Attn:</b> <%= @po.employee.First_Name %>&nbsp;<%= @po.employee.Last_Name %></td>
+  </tr>
+  <tr>
+    <td width="38%">&nbsp;</td>
+    <td width="27%">&nbsp;</td>
+    <td width="35%"> 3832 N. Fine Ave</td>
+  </tr>
+  <tr>
+    <td width="38%">&nbsp;</td>
+    <td width="27%">&nbsp;</td>
+    <td width="35%">Fresno, CA 93727</td>
+  </tr>
+  <tr>
+    <td width="38%">&nbsp;</td>
+    <td width="27%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+</table>
+<table width="87%" border="0">
+  <tr>
+    <td width="51%"><b>Vendor: </b></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%"><b>Shipment:</b> <%= @po.shipment %></td>
+  </tr>
+  <tr>
+    <td width="51%"><%= @po.payable.Account_Name %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="51%"><%= @po.payable.Mailing_Address %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="51%"><%= @po.payable.Mailing_Address_2 %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%"><b>Terms: </b> <%= @po.terms %></td>
+  </tr>
+  <tr>
+    <td width="51%"><%= @po.payable.Phone_Number %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="51%"><%= @po.payable.Fax_Number %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="51%"><b>Attn:</b> <%= @po.payable.Point_of_Contact %></td>
+    <td width="14%">&nbsp;</td>
+    <td width="35%">&nbsp;</td>
+  </tr>
+</table>
+<table width="87%" border="1">
+  <tr> 
+    <td> 
+      <div align="center"><b>Ordered Unit</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>Part No.</b></div>
+    </td>
+    <td> 
+      <div align="center"><b>Description</b></div>
+    </td>
+    <!-- Ruby code here -->
+       <% for po_item in @po.po_items %>
+       <tr><td align="center"><%= po_item.quantity %></td>
+       <td align="center"><%= po_item.item_num %></td>
+       <td align="center"><%= po_item.description %></td></tr>
+       <% end %>
+    </tr>
+  </tr>
+</table>
+<p>I hereby approve the above order.</p>
+
+<p />
+<%= @po.employee.First_Name %>&nbsp;<%= @po.employee.Last_Name %><br />
+<p>___________________________________ Dated: ____________________</p>
+<p>&nbsp;</p>
+</body>
+</html>

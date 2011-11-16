@@ -1,0 +1,8 @@
+<% for column in Officeprocedure.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%= @officeprocedure.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @officeprocedure.id %> |
+<%= link_to 'Back', :action => 'list' %>

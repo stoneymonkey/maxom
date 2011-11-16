@@ -1,0 +1,67 @@
+
+<%
+@bofw_balance_plus_out = @bofw_outstanding_balance[1,@bofw_outstanding_balance.length].to_f + @bofw_balance.to_f
+
+@cvcb_balance_plus_out = @cvcb_outstanding_balance[1,@cvcb_outstanding_balance.length].to_f + @cvcb_balance.to_f
+
+%>
+<script>
+var cvcb_bpo = <%= @cvcb_balance_plus_out %>;
+var bofw_bpo = <%= @bofw_balance_plus_out %>;
+var bofw_bal = <%= @bofw_balance %>;
+var cvcb_bal = <%= @cvcb_balance %>;
+var bofw_out = <%= @bofw_outstanding_balance %>;
+var cvcb_out = <%= @cvcb_outstanding_balance %>;
+
+function populateOthers(option)
+{
+  var  opt = getSelectedObj(option);
+  if (opt == "bofw") {
+  document.getElementById("inhouse_balance").value = bofw_bal;
+  document.getElementById("outstanding_balance").value = bofw_out;
+  document.getElementById("balplusoutstanding").value = bofw_bpo;
+  }
+  else {
+  document.getElementById("inhouse_balance").value = cvcb_bal;
+  document.getElementById("outstanding_balance").value = cvcb_out;
+  document.getElementById("balplusoutstanding").value = cvcb_bpo;
+  }
+}
+function getSelectedObj(form)
+{
+ var listObj = form;
+ var listlength = listObj.length;
+ for (var i = 0; i < listlength; i++) 
+ {
+  if (listObj.options[i].selected)
+  {
+   return listObj.options[i].value;
+  }
+ }
+ return null;
+}
+</script>
+
+<form name="entry" action="show_add_entries_params" method="post">
+First Name<br />
+<%= text_field("new_entry", "first_name") %><br />
+Bank:<br />
+<select name="new_entry[bank]" onChange="populateOthers(this)">
+  <option value=""></option>
+  <option value="bofw">Bank of the West</option>
+  <option value="cvcb">Comunity Bank</option>
+</select>
+<!-- %= select("new_entry", options = {"bofw" => "Bank of the West", "cvcb" => "Community Bank"}) % -->
+<br />
+Date & Time:<br />
+<%= datetime_select("new_entry", "date_time") %><br />
+Inhouse Balance:<br />
+<input name="inhouse_balance" id="inhouse_balance" value="" /><br />
+Total Outstanding Withdrawls:<br />
+<input name="outstanding_balance" id="outstanding_balance" value="" /><br />
+Balance Plus Outstanding:<br />
+<input name="balplusoutstanding" id="balplusoutstanding" value="" /><br />
+Online Balance:<br />
+<%= text_field("new_entry", "balance") %><br />
+<input TYPE="submit" name="submit" value="submit">&nbsp;
+</form>

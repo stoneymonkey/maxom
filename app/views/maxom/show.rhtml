@@ -1,0 +1,143 @@
+<title>Account: <%= params[:acc] %> - Checking account transactions for <%= params[:month] %> of <%= params[:year] %></title>
+<%= javascript_include_tag "prototype" %>
+<script src="/js/libForm.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/style.css">
+
+<script>
+function getSelectedObj(form)
+{
+ var listObj = form;
+ var listlength = listObj.length;
+ for (var i = 0; i < listlength; i++) 
+ {
+  if (listObj.options[i].selected)
+  {
+   return listObj.options[i].value;
+  }
+ }
+ return null;
+} //end of function getSelectedObj
+
+function redirect_to(){
+   var year = getSelectedObj(document.forms[0].year);
+   var month = getSelectedObj(document.forms[0].month);
+   var acc = getSelectedObj(document.forms[0].acc);
+   //alert("http://"+location.hostname+":"+location.port+"/"+"?acc="+acc+"&month="+month+"&view="+view+"&year="+year)
+   location.replace("http://"+location.hostname+":"+location.port+"/<%= params[:controller] %>/<%= params[:action] %>/"+acc+"/"+year+"/"+month)
+}
+
+</script>
+<table>
+ 	<tr>
+	<td><%= start_form_tag :action => 'show_params', :id => @month_rec%>Viewing&nbsp;
+        	<select name="acc">
+        		<%= options_for_select({"Bank of the West" => "bofw",
+						"Central Valley Comm. Bank" => "cvcb"},
+						"#{params[:acc]}") %>
+        	</select>
+		&nbsp;for
+		<select name="month">
+			<%= options_for_select(
+				[
+				["January", "1"],
+				["February", "2"],
+				["March", "3"],
+				["April", "4"],
+				["May", "5"],
+				["June", "6"],
+				["July", "7"],
+				["August", "8"],
+				["September", "9"],
+				["October", "10"],
+				["November", "11"],
+				["December", "12"]	
+				],
+				"#{params[:month]}") %>
+		</select>
+		&nbsp;of&nbsp;
+		<select name="year">
+			<%= options_for_select(["2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010","2011","2012"],
+						"#{params[:year]}") %>
+		</select>
+	</td>
+	<td valign="top">
+		<a href="javascript:void(0)" onClick="redirect_to()"><img src="/images/looking_glass.gif"></a>
+		<%= end_form_tag %>
+	</td>
+	</tr>
+</table>
+<hr />
+
+<!-- %= select_month(Date.today, :add_month_numbers => true) % -->
+<<&nbsp;
+<!= link_to_function("Previous", "location.replace('http://localhost:3001/maxom/show?acc=#{params[:acc]}&year=#{params[:year]}&month=#{(params[:month].to_i-1)}')") -->
+<%= link_to("Previous", :controller => "maxom",
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month].to_i-1}",
+					:sort => "transaction_date")
+	%>
+&nbsp;Month&nbsp;
+<!-- link_to_function("Next", "location.replace('http://localhost:3001/maxom/show?acc=#{params[:acc]}&year=#{params[:year]}&month=#{(params[:month].to_i+1)}')") -->
+<%= link_to("Next", :controller => "maxom",
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month].to_i+1}",
+					:sort => "transaction_date")
+	%>
+&nbsp;>>
+<%= hidden_field("views", :value => "#{params[:views]}") %>
+<table class="servicesT">
+   <tr>
+     <% @col_names.each do |name| %>
+      <td class="servHd">
+         <b><%= link_to("#{name.capitalize}", :controller => "maxom",
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month]}",
+					:sort => "#{name}")
+	%></b>
+      </td>
+     <% end %>
+   </tr>
+   <tr>	
+   <% @items.each do |item| %>
+      <td>
+          <%= link_to "#{item.id}", :action => "edit", :acc => "#{params[:acc]}", :id => "#{item.id}" %>
+      </td>
+      <td>
+         <%= item.transaction_date %>
+     </td>
+      <td>
+         <%= item.clear_date %>
+      </td>
+      <td>
+         <%= item.amount %>
+      </td>
+      <td>
+         <%= item.ref_chk %>
+      </td>
+      <td>
+         <%= item.trans_type %>
+      </td>
+      <td nowrap>
+         <%=item.payee %>
+      </td>
+      <td nowrap>
+         <%= item.description %>
+      </td>
+      <td nowrap>
+         <%= item.account_type %>
+      </td>
+      <td>
+         <%= item.reconciled %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+</table>

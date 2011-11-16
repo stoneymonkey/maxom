@@ -1,0 +1,2 @@
+module LaborHelper
+end

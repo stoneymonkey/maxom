@@ -1,0 +1,87 @@
+<title>
+Changes to transaction # <%= params[:id] %> of account <%= params[:acc] %>.
+</title>
+Making changes to transaction # <%= params[:id] %> of account <%= params[:acc] %>.
+<hr />
+<%= start_form_tag(:action => "update", :acc => "#{params[:acc]}" ) %>
+<%= hidden_field("item", "id", :value => "#{params[:id]}") %>
+
+<table border="0">
+       <!-- Table Row -->
+   <tr>
+      <td>
+         Date of Transaction:&nbsp;<%= text_field("transaction_date", "",:value => "#{@item.transaction_date}", :size => "10") %>
+      </td>
+      <td>
+         &nbsp;
+      </td>
+      <td>
+         Date transaction cleared:&nbsp;<%= text_field("clear_date",  "",:value => "#{@item.clear_date}", :size => "10") %>
+      </td>
+      <td>
+         &nbsp;
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         Transaction Type:&nbsp;
+         <%= select("trans_type", "",[
+                                  ["#{@item.trans_type}", "#{@item.trans_type}"],
+                                  ['CHECK', 1],
+				  ['DEBIT', 2],
+				  ['DEPOSIT', 3],
+				  ['DIRECT DEPOSIT',4],
+				  ['CREDIT', 5],
+				  ['DIRECT DEBIT', 6],
+				  ['ATM/POS', 7],				                                       
+				  ['ACH', 8]
+                                       ]
+                   ) %>
+      </td>
+      <td>
+         Ref / Check #:&nbsp;<%= text_field("ref_chk",  "",:value => "#{@item.ref_chk}", :size => "10" ) %>
+      </td>
+      <td>
+         Amount:&nbsp;<%= text_field("amount",  "",:value => "#{@item.amount}", :size => "10" ) %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         Payee: &nbsp;<%= text_field("payee",  "",:value => "#{@item.payee}") %>
+      </td>
+      <td>
+      </td>
+      <td>
+         Description: &nbsp;<%= text_field("description", "", :value => "#{@item.description}") %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         <!-- %= select(:Account, :Account_Type, @types) % -->
+         Account Type:&nbsp;<select name="account_type">
+         <option><%= @item.account_type %></option>
+         <%= options_for_select(@types) %>
+         </select>
+      </td>
+      <td>
+      </td>
+      <td>
+
+      </td>
+      <td>
+      </td>
+   </tr>
+   <tr>
+      <td>
+        <input type="submit" name="submit" value="submit">
+      </td>
+  </tr>
+</table>
+<%= end_form_tag %>

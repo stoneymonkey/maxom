@@ -1,0 +1,43 @@
+<form action="show_params" name="test_form" method="post">
+
+<table border="1">
+   <tr>
+   <% @items.each do |check| %>
+      <td>
+         <%= check.id %>
+      </td>
+      <td>
+         <%= text_field("transaction_date", check.transaction_date, :value => "#{check.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("clear_date", check.clear_date, :size => "9", :value => "#{check.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("amount", check.amount, :value => "#{number_to_currency(check.amount)}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("ref_chk", check.ref_chk, :size => "10", :value => "#{check.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("trans_type", check.trans_type, :value => "#{check.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("payee", check.payee, :value => "#{check.payee}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("description", check.description, :value => "#{check.description}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("account_type", check.account_type, :value => "#{check.account_type}") %>
+      </td>
+      <td>
+         <%= check_box("_reconciled", check.id, {}, "yes", "no") %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+</table>
+<input type="submit" name="submit" value="submit" />
+</form>
+
+<%= @test %>

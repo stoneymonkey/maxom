@@ -1,0 +1,121 @@
+<title>Showing <%= params[:views].capitalize! %> for <%= params[:month] %> of <%= params[:year] %></title>
+
+<%= javascript_include_tag "prototype" %>
+<script src="/js/libForm.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/style.css">
+
+<script>
+function getSelectedObj(form)
+{
+ var listObj = form;
+ var listlength = listObj.length;
+ for (var i = 0; i < listlength; i++) 
+ {
+  if (listObj.options[i].selected)
+  {
+   return listObj.options[i].value;
+  }
+ }
+ return null;
+} //end of function getSelectedObj
+
+function redirect_to(){
+   var year = getSelectedObj(document.forms[0].year);
+   var month = getSelectedObj(document.forms[0].month);
+   var view = getSelectedObj(document.forms[0].view);
+   var acc = getSelectedObj(document.forms[0].acc);
+   //alert("http://"+location.hostname+":"+location.port+"/"+"?acc="+acc+"&month="+month+"&view="+view+"&year="+year)
+   location.replace("http://"+location.hostname+":"+location.port+location.pathname+"?acc="+acc+"&month="+month+"&views="+view+"&year="+year)
+}
+
+</script>
+
+<!-- form action="show_params" name="test_form" method="post" -->
+
+<%= start_form_tag :action => 'show_params', :id => @month_rec%>
+
+Viewing&nbsp;
+        <select name="acc">
+        	<%= options_for_select({"Bank of the West" => "bofw", "Central Valley Comm. Bank" => "cvcb"}, "#{params[:acc]}") %>
+        </select>
+&nbsp;(<%= params[:views] %>)&nbsp;
+	<select name="view">
+                <option></option>
+		<%= options_for_select({"Debits" => "debits", "Deposits" => "deposits", "Checks" => "checks"}, "#{params[:views]}") %>
+	</select>
+for 
+	<select name="month">
+		<%= options_for_select({"January" => "1",
+					"February" => "2",
+					"March" => "3",
+					"April" => "4",
+					"May" => "5",
+					"June" => "6",
+					"July" => "7",
+					"August" => "8",
+					"September" => "9",
+					"October" => "10",
+					"November" => "11",
+					"December" => "12"},"#{params[:month]}") %></select>
+&nbsp;of&nbsp;
+	<select name="year">
+		<%= options_for_select(["2003", "2004", "2005", "2006"], "#{params[:year]}") %>
+	</select>. <a href="javascript:void(0)" onClick="redirect_to()">Get New View</a>
+<hr />
+<table border="1">
+   <tr>
+     <% @col_names.each do |name| %>
+      <td>
+         <b><%= name.capitalize! %></b>
+      </td>
+     <% end %>
+   </tr>
+
+   <tr>	
+   <% @items.each do |item| %>
+      <td>
+          <%= text_field("#{params[:acc]}", "id", :value => "#{params[:acc]}", :size => "6", :id => "locked") %>
+      </td>
+      <td>
+         <%= text_field("#{params[:acc]}", "transaction_date", :value => "#{item.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("#{params[:acc]}", "clear_date", :size => "9", :value => "#{item.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("#{params[:acc]}", "amount", :value => "#{item.amount}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("#{params[:acc]}", "ref_chk", :size => "10", :value => "#{item.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("#{params[:acc]}", "trans_type", :value => "#{item.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("#{params[:acc]}", "payee", :value => "#{item.payee}", :size => "15") %>
+      </td>
+      <td nowrap>
+         <%= text_field("#{params[:acc]}", "description", :value => "#{item.description}", :size => "20") %>
+      </td>
+      <td nowrap>
+         <select name="<%= params[:acc] %>[account_type]">
+         <option><%= item.account_type %></option>
+         <%= options_for_select(@types, "#{item.account_type}") %>
+         </select>
+
+      </td>
+      <td>
+         <%= check_box("#{params[:acc]}", "#{params[:acc]}reconciled]", {}, "yes", "no") %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+
+</table>
+<input name="submit" value="submit" type="submit"/>
+<%= end_form_tag %>
+<%= Time.now %>
+
+<%= @test %>

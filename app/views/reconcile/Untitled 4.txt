@@ -1,0 +1,137 @@
+      to_be_reconciled = params[:_reconciled]
+      to_be_reconciled.each do |_id, do_it|          
+render_text("#{_id} &nbsp; #{do_it}<br/>")
+
+            #@deposits = Bofw.find(:all, :conditions => "year(clear_date) = #{year} and month(clear_date) = #{month} and amount > 0", :order => "clear_date")
+            #@checks = Bofw.find(:all, :conditions => "year(clear_date) = #{year} and month(clear_date) = #{month} and trans_type = 1", :order => "ref_chk")
+            #@debits = Bofw.find(:all, :conditions => "year(clear_date) = #{year} and month(clear_date) = #{month} and trans_type != 1 and amount < 0", :order => "clear_date")
+
+      <td>
+         <%= text_field("#{item.id}", "transaction_date", :value => "#{item.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("#{item.id}", "clear_date", :size => "9", :value => "#{item.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("#{item.id}", "amount", :value => "#{number_to_currency(item.amount)}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("#{item.id}", "ref_chk", :size => "10", :value => "#{item.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("#{item.id}", "trans_type", :value => "#{item.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("#{item.id}","payee", :value => "#{item.payee}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("#{item.id}","description", :value => "#{item.description}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("#{item.id}","account_type", :value => "#{item.account_type}") %>
+      </td>
+      <td>
+         <%= check_box("_reconciled", item.id, {}, "yes", "no") %>
+      </td>
+
+
+
+
+      @ids.each do |id, do_it|
+         if do_it == "yes"
+            #m = Bofw.find(id)
+            #m.update_attributes(params[:reconciled])
+         end
+     end
+     #redirect_to(:controller => "maxom")
+     render_text(@params)
+
+
+
+==
+
+
+   <tr><td><h3>Debits</h3></td></tr>
+   <tr>
+   <% @debits.each do |item| %>
+      <td>
+           <%= text_field("id", item.id, :value => "#{item.id}", :size => "9", :id => "locked") %>
+      </td>
+      <td>
+         <%= text_field("transaction_date", item.id, :value => "#{item.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("clear_date", item.id, :size => "9", :value => "#{item.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("amount", item.id, :value => "#{number_to_currency(item.amount)}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("ref_chk", item.id, :size => "10", :value => "#{item.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("trans_type", item.id, :value => "#{item.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("payee", item.id, :value => "#{item.payee}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("description", item.id, :value => "#{item.description}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("account_type", item.id, :value => "#{item.account_type}") %>
+      </td>
+      <td>
+         <%= check_box("reconciled", item.id, {}, "yes", "no") %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+   <tr><td><h3>Checks</h3></td></tr>
+   <tr>
+   <% @checks.each do |item| %>
+      <td>
+          <%= text_field("id", item.id, :value => "#{item.id}", :size => "9", :id => "locked") %>
+      </td>
+      <td>
+         <%= text_field("transaction_date", item.id, :value => "#{item.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("clear_date", item.id, :size => "9", :value => "#{item.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("amount", item.id, :value => "#{number_to_currency(item.amount)}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("ref_chk", item.id, :size => "10", :value => "#{item.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("trans_type", item.id, :value => "#{item.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("payee", item.id, :value => "#{item.payee}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("description", item.id, :value => "#{item.description}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("account_type", item.id, :value => "#{item.account_type}") %>
+      </td>
+      <td>
+         <%= check_box("reconciled", item.id, {}, "yes", "no") %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+
+
+
+==
+
+
+
+<!-- % @ids.each do |id, do_it| %>
+  <% if do_it == "yes" %>
+     <%= id %> &nbsp; <%= do_it %> <br />
+  <% end %>
+<% end % -->

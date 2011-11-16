@@ -1,0 +1,26 @@
+<h3>All Work Orders</h3>
+<table border="1">
+   <tr>
+     <% @col_names.each do |name| %>
+      <td>
+         <b><%= name.capitalize %></b>
+      </td>
+     <% end %>
+   </tr>
+<% @workorders.each do |order| %>
+   <tr>
+	<td><%= order.id %></td>
+	<td><%= order.ordered_on %></td>
+	<td>
+		<%= order.client.id %>
+		<%= order.client.Co_Name %>&nbsp; 
+		<%= order.client.First_Name %>&nbsp;                                                           
+		<%= order.client.Last_Name %>
+	</td>
+	<td><%= order.job_location %></td>
+	<td><%= order.description %></td>
+	<td><%= order.promised_by %></td>
+	<td><%= order.completed_on %></td>
+   </tr>
+<% end %>
+</table>

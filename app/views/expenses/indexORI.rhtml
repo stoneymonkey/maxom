@@ -1,0 +1,38 @@
+<%
+
+
+%>
+<table border="1">
+<tr>
+<td></td>
+<td>Jan</td>
+<td>Feb</td>
+<td>Mar</td>
+<td>Apr</td>
+<td>May</td>
+<td>Jun</td>
+<td>Jul</td>
+<td>Aug</td>
+<td>Sep</td>
+<td>Oct</td>
+<td>Nov</td>
+<td>Dec</td>
+</tr>
+<% for i in 1..@categories.length %>
+<tr>
+   <td>
+    <%=  @categories[i].Account %>
+
+   </td>
+  <% for x in 1..12 %>
+   <td>
+   <%= Bofw.getExpensesByCat(2005, x, "#{@categories[1].Account}") %>
+   </td>
+<% end %>
+
+
+</tr>
+<% end %>
+
+
+</table>

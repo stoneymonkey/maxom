@@ -1,0 +1,41 @@
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/style.css">
+<title>Expense and Income for <%= @params[:year] %></title>
+
+<h3>Expense and Income for <%= @params[:year] %>
+</h3>
+<% @exp_totals.length %>
+<table border="1">
+<tr>
+<td></td>
+<td>Jan</td>
+<td>Feb</td>
+<td>Mar</td>
+<td>Apr</td>
+<td>May</td>
+<td>Jun</td>
+<td>Jul</td>
+<td>Aug</td>
+<td>Sep</td>
+<td>Oct</td>
+<td>Nov</td>
+<td>Dec</td>
+</tr>
+<% 
+  for i in 1..@categories.length-1
+%>
+<tr>
+   <td>
+    <%= @categories[i].Account %>
+
+   </td>
+  <% for x in 1..12 %>
+   <td>
+   <%= @exp_totals[i,x] %>
+   </td>
+<% end %>
+</tr>
+<% end %>
+</table>
+
+
+

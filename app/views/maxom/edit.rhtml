@@ -1,0 +1,108 @@
+<title>
+Changes to transaction # <%= params[:id] %> of account <%= params[:acc] %>.
+</title>
+
+<script src="/javascripts/libForm.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/css/style.css">
+
+Making changes to transaction # <%= params[:id] %> of account <%= params[:acc] %>. <a href="javascript:delete_alert('<%= params[:acc] %>','<%= params[:id] %>')">Delete this transaction.</a>
+
+<%= start_form_tag( { :action => "update", :acc => "#{params[:acc]}" }, { :name => "edit" }) %>
+<!-- form name="edit" action="update?acc=#{params[:acc]}" method="post" -->
+<%= hidden_field("#{params[:acc]}", "id", :value => "#{params[:id]}") %>
+<%= hidden_field("acc", "", :value => "#{params[:acc]}") %>
+<%= hidden_field("month", "", :value => "#{params[:month]}") %>
+<%= hidden_field("year", "", :value => "#{params[:year]}") %>
+<table border="1">
+   <tr>
+      <td colspan="4">
+         <hr />
+      </td>
+  </tr>
+  </tr>
+       <!-- Table Row -->
+   <tr>
+      <td>
+         Date of Transaction:&nbsp;<%= text_field("#{params[:acc]}", "transaction_date", :value => "#{@item.transaction_date}", :size => "10") %><%= link_to_function(image_tag("/images/calendaricon.gif", :width => "15", :height => "15", :border => "0", :titles => "Click here to change date."), "toggleDatePicker('daysOfMonth','edit.#{params[:acc]}[transaction_date]')") %>
+      </td>
+      <td>
+        <div id="daysOfMonth" style="position:absolute;"></div>
+        <div id="daysOfMonth2" style="position:absolute;"></div>
+      </td>
+      <td>
+         Date transaction cleared:&nbsp;<%= text_field("#{params[:acc]}", "clear_date", :value => "#{@item.clear_date}", :size => "10") %><%= link_to_function(image_tag("/images/calendaricon.gif", :width => "15", :height => "15", :border => "0"), "toggleDatePicker('daysOfMonth2','edit.#{params[:acc]}[clear_date]')") %>
+      </td>
+      <td>
+         &nbsp;
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         Transaction Type:&nbsp;
+         <%= select("#{params[:acc]}", "trans_type", [
+                                  ["#{@item.trans_type}", "#{@item.trans_type}"],
+                                  ['CHECK', 1],
+				  ['DEBIT', 2],
+				  ['DEPOSIT', 3],
+				  ['DIRECT DEPOSIT',4],
+				  ['CREDIT', 5],
+				  ['DIRECT DEBIT', 6],
+				  ['ATM/POS', 7],				                                       
+				  ['ACH', 8]
+                                       ]
+                   ) %>
+      </td>
+      <td>
+         Ref / Check #:&nbsp;<%= text_field("#{params[:acc]}", "ref_chk", :value => "#{@item.ref_chk}", :size => "10" ) %>
+      </td>
+      <td>
+         Amount:&nbsp;<%= text_field("#{params[:acc]}", "amount", :value => "#{@item.amount}", :size => "10" ) %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         Payee: &nbsp;<%= text_field("#{params[:acc]}", "payee", :value => "#{@item.payee}") %>
+      </td>
+      <td>
+      </td>
+      <td>
+         Description: &nbsp;<%= text_field("#{params[:acc]}", "description", :value => "#{@item.description}") %>
+      </td>
+      <td>
+      </td>
+    </tr>
+    <!-- Table Row -->
+    <tr>
+      <td>
+         <!-- %= select(:Account, :Account_Type, @types) % -->
+         Account Type:&nbsp;<select name="<%= params[:acc] %>[account_type]">
+         <option></option>
+         <%= options_for_select(@types, "#{@item.account_type}") %>
+         </select>
+      </td>
+      <td>
+      </td>
+      <td>
+
+      </td>
+      <td>
+      </td>
+   </tr>
+   <tr>
+      <td colspan="4"><hr /></td>
+   </tr>
+   <tr>
+      <td>
+        <input type="submit" name="submit" value="Submit">
+      </td>
+  </tr>
+</table>
+<%= end_form_tag %>
+
+<%= Time.now.month %><br /><%= Time.now.year %>

@@ -1,0 +1,24 @@
+<h1>Listing officeprocedures</h1>
+
+<table>
+  <tr>
+<% for column in Officeprocedure.content_columns %>
+    <th><%= column.human_name %></th>
+<% end %>
+  </tr>
+  
+<% for officeprocedure in @officeprocedures %>
+  <tr>
+  <% for column in Officeprocedure.content_columns %>
+    <td><%=h officeprocedure[column.name] %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => officeprocedure.id %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => officeprocedure.id %></td>
+    <td><%= link_to 'Destroy', :action => 'destroy', :id => officeprocedure.id %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New officeprocedure', :action => 'new' %>

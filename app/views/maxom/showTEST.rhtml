@@ -1,0 +1,120 @@
+
+
+
+<%= start_form_tag :action => 'show_params', :id => @month_rec%>
+Viewing&nbsp;
+        <select name="acc">
+        	<%= options_for_select({"Bank of the West" => "bofw", "Central Valley Comm. Bank" => "cvcb"}, "#{params[:acc]}") %>
+        </select>
+&nbsp;for
+<select name="month">
+	<%= options_for_select(
+		[
+		["January", "1"],
+		["February", "2"],
+		["March", "3"],
+		["April", "4"],
+		["May", "5"],
+		["June", "6"],
+		["July", "7"],
+		["August", "8"],
+		["September", "9"],
+		["October", "10"],
+		["November", "11"],
+		["December", "12"]	
+		],
+		"#{params[:month]}") %>
+</select>&nbsp;of&nbsp;
+	<select name="year">
+		<%= options_for_select(["2003", "2004", "2005", "2006", "2007"], "#{params[:year]}") %>
+	</select>. <a href="javascript:void(0)" onClick="redirect_to('maxom')">View new month.</a>
+<%= end_form_tag %>
+<hr />
+
+<<&nbsp;
+
+<%= link_to_remote("Previous", 
+				:update => "content",
+				:url => {
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month].to_i-1}",
+					:sort => "transaction_date"
+    					}
+	)%>
+&nbsp;Month&nbsp;
+<%= link_to_remote("Next", 
+				:update => "content",
+				:url => {
+					:action => "show",
+					:acc => "#{params[:acc]}",
+					:year => "#{params[:year]}",
+					:month => "#{params[:month].to_i+1}",
+					:sort => "transaction_date"
+    					}
+	)%>
+&nbsp;>>
+<%= hidden_field("views", :value => "#{params[:views]}") %>
+<table border="1">
+   <tr>
+     <% @col_names.each do |name| %>
+      <td>
+         <b><%= link_to_remote("#{name.capitalize}", 
+				:url => {
+						:action => "show",
+						:acc => "#{params[:acc]}",
+						:year => "#{params[:year]}",
+						:month => "#{params[:month]}",
+						:sort => "#{name}"
+					},
+				:update => "content"
+)
+	%></b>
+      </td>
+     <% end %>
+   </tr>
+   <tr>	
+   <% @items.each do |item| %>
+      <td>
+          <%= link_to_remote( "#{item.id}", 
+				:url => {
+					:action => "edit",
+					:acc => "#{params[:acc]}",
+					:id => "#{item.id}"
+					},
+    				:update => "popup"
+          )
+          %>
+      </td>
+      <td>
+         <%= item.transaction_date %>
+     </td>
+      <td>
+         <%= item.clear_date %>
+      </td>
+      <td>
+         <%= item.amount %>
+      </td>
+      <td>
+         <%= item.ref_chk %>
+      </td>
+      <td style="visibility: none">
+         <%= item.trans_type %>
+      </td>
+      <td nowrap>
+         <%=item.payee %>
+      </td>
+      <td nowrap>
+         <%= item.description %>
+      </td>
+      <td nowrap>
+         <%= item.account_type %>
+      </td>
+      <td>
+         <%= item.reconciled %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
+</table>

@@ -1,0 +1,42 @@
+3570
+
+http://us.ebayobjects.com/6k;h=v5|335f|0|0|%2a|n;18753711;0-0;1;8103813;1-468|60;11335070|11352966|1;;~sscs=%3fhttp://us.ebayobjects.com/2c;8126777;9115261;o?http://altfarm.mediaplex.com/ad/ck/1065-17226-2357-0?kwd=?id!&mpro=http://www.stores.ebay.com/id=178434244
+
+          <option value="#{params[:view]}"><%= params[:view].capitalize! %></option>
+
+[ "VISA", "MasterCard", "Discover" ], ["VISA", "Discover"]
+
+[["Debits", "debits"], ["Checks", "checks"], ["Deposists", "deposits"]], "Checks"
+
+[ "VISA", "MasterCard", "Discover" ], ["MasterCard"]
+
+:working
+[ "Debits", "Deposits", "Checks" ], "#{params[:view].capitalize!}"
+
+does not work
+[ ["Debits", "debits"], ["Deposits", "deposits"], ["Checks", "checks"] ], "#{params[:view].capitalize!}"
+
+<a href="#" onclick="new Ajax.Updater('bofw_balance', '/maxom/current_balance?acc=bofw', {asynchronous:true, evalScripts:true}); return false;">Bank of the West</a>
+
+<% ids = @params[:ids] %>
+
+
+<% ids.each do |x| %>
+ <%= x %>
+<% end %>
+
+
+
+map.connect "maxom/:
+
+map.connect "reconcile/show/:acc/:year/:month",
+	:controller => "maxom",
+	:action => "show"
+	:requirements => {
+			:year => /(19|20)\d\d/,
+			:month => /[01]?\d/
+		}
+			
+
+==
+

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>ALL Purchase Orders</title>
+</head>
+<body>
+
+<h1>Purchase Order - All Orders</h1>
+<!-- 
+  Hello #{@session["person"]}
+
+-->
+
+Hello <%= @session["person"] %> 
+
+
+<table border="1">
+ <tr>
+  <td width="25%"><p align="center"><i><b>Vendor</b></i></td>
+  <td width="25%"><p align="center"><i><b>Employee</b></i></td>
+  <td width="25%"><p align="center"><i><b>Work Order #</b></i></td>
+  <td width="25%"><p align="center"><i><b>For Client</b></i></td>
+  <td width="25%"><p align="center"><i><b>PO #</b></i></td>
+  <td width="20%"><p align="center"><i><b>Date</b></i></td>
+ </tr>
+
+ <% @po.each do |po| %>
+ <!-- % for po in @po % -->
+  <tr>
+   <td><%= @vendor.find(po.payable_id).Account_Name %></td>
+   <td><%= @employee.find(po.employee_id).First_Name %></td>
+   <td><%= link_to po.workorder_id, :action => "show", :id => po.workorder_id, :controller => "workorder" %></td>
+   <td>
+    <% if po.workorder_id == 0 %>
+       &nbsp;
+      <%= @client.find(@workorder.find(po.workorder_id).client_id).Co_Name %>
+   <% end %>
+   </td>
+   <td> <%= link_to po.id, :action => "show", :id => po.id %> </td>
+   <td><%= po.order_date %></td>
+  </tr>
+ <% end %>
+</table>
+<p><%= link_to "Create new Purchase Order", :action => "new" %></p>
+
+</body>
+</html>

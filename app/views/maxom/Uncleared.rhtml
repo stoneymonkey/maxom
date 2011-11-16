@@ -1,0 +1,19 @@
+<table border="1">
+   <tr>
+      <td>ID</td>
+      <td>Transaction Date</td>
+      <td>Clear Date</td>
+      <td>Amount</td>
+      <td>Ref / Chk #</td>
+
+   </tr>
+<% @items.each do |item| %>
+      <tr>
+         <td><%= item.id %></td>
+         <td><%= item.transaction_date %></td>
+         <td><%= item.clear_date %></td>
+         <td><%= item.amount %></td>
+         <td><%= item.ref_chk %></td>
+      </tr>
+<% end %>
+</table>

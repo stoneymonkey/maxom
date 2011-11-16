@@ -1,0 +1,29 @@
+<html>
+<body>
+<h2>Lighting Resources Purchase Order</h2>
+Purchase Order No. <%= @po.id %><div align="right">Order Date: <%= @po.order_date %></div>
+
+<table border="1">
+   <tr>
+      <td></td>
+      <td></td>
+      <td><%= @po.payables_id %></td>
+      <td><%= @po.ordered_by %></td>
+
+   </tr>
+</table>
+
+
+<% for po_item in @po.po_items %>
+<%= po_item.item_num %><br/>
+<%= po_item.description %><br />
+<% end %>
+
+</p>
+</body>
+</html>
+
+
+
+
+

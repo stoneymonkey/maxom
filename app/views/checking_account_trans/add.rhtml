@@ -1,0 +1,96 @@
+
+<html>
+<head>
+<title>Adding Checking Account Transaction</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<script src="js/libForm.js"></script>
+<script src="js/Add_CheckingAccountTrans.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="css/style.css">
+
+</head>
+
+<% today = Date.today %>
+
+<body bgcolor="#FFFFFF" onLoad="">
+
+<form NAME="checking_account_trans" method="post" action="/checking_account_trans/create">
+
+  <p>Adding a transaction to the check register. </p>
+  <table width="91%" border="1" height="279">
+    <tr>
+      <td width="53%">Bank Account 
+        <select name="acc">
+          <option></option>
+          <option value="bofw">Bank of the West</option>
+          <option value="cvcb">Central Valley Community Bank</option>
+        </select>
+      </td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="53%">Transaction Date 
+        <input type="text" name="transaction_date" value="<%= today.to_s %>">&nbsp;<img onClick="toggleDatePicker('daysOfMonth','Add_CheckingAccountTrans.transaction_date')" id="daysOfMonthPos" name="daysOfMonthPos" width=19 height=19 src="../images/calendaricon.gif" align=absmiddle border=0 alt="date picker">
+<div id="daysOfMonth" style="position:absolute;"></div>
+      </td>
+      <td width="47%">Clear Date 
+        <input type="text" name="clear_date">&nbsp;<img onClick="toggleDatePicker('daysOfMonth','Add_CheckingAccountTrans.clear_date')" id="daysOfMonthPos2" name="daysOfMonthPos2" width=19 height=19 src="../images/calendaricon.gif" align="middle" border=0 alt="date picker"><div id="daysOfMonthII" style="position:absolute;"></div>
+      </td>
+    </tr>
+    <tr>
+      <td width="53%">Banking Transaction Type
+       <select name="trans_type" onChange="validate(document,this.form.amount,this.form.trans_type)">
+       <option value="0"></option>
+       <option value="1">CHECK</option>
+       <option value="2">DEBIT</option>
+       <option value="3">DEPOSIT</option>
+       <option value="4">DIRECT DEPOSIT</option>
+       <option value="5">CREDIT</option>
+       <option value="6">DIRECT DEBIT</option>
+       <option value="7">ATM/POS</option>
+       <option value="8">ACH</option>
+       </select>
+      </td>
+      <td width="47%">Check or Reference Number 
+        <input type="text" name="ref_chk">
+      </td>
+    </tr>
+    <tr>
+      <td width="53%">Amount 
+        <input type="text" name="amount" onChange="validate(document,this,this.form.trans_type)">
+      </td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="53%">Payee 
+        <input type="text" name="payee">
+      </td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="53%">Description 
+        <input type="text" name="description">
+      </td>
+      <td width="47%">Account Type 
+	  
+		<select name="account_type">
+		 </option><option>
+		 <%= options_for_select(@types, "") %>
+		</select>
+	  
+	  </td>
+    </tr>
+    <tr>
+      <td width="53%">&nbsp;<input type="text" value="0" name="reconciled"</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+    <tr>
+
+      <td width="53%">&nbsp;</td>
+      <td width="47%">&nbsp;</td>
+    </tr>
+  </table>
+  <input type="submit" name="Submit" value="Submit" />
+</form>
+</body>
+</html>

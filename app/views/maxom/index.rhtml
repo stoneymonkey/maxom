@@ -1,0 +1,135 @@
+
+<HTML>
+<HEAD>
+  <TITLE>Main Page :: Maxom</TITLE>
+  <LINK REV="made" HREF="mailto:">
+  <META NAME="generator" CONTENT="NoteTab Std 4.85">
+  <META NAME="author" CONTENT="">
+  <META NAME="description" CONTENT="">
+  <META NAME="keywords" CONTENT="">
+  <META NAME="Date Last Modified" CONTENT="2007-06-16">
+
+<%= javascript_include_tag "prototype" %>
+<script src="/javascripts/libForm.js"></script>
+<script src="/javascripts/index.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/style.css">
+
+<script>
+   function show_balances(){
+	new Ajax.Updater('bofw_balance', '/maxom/current_balance?acc=bofw', {asynchronous:true, evalScripts:true});
+	new Ajax.Updater('cvcb_balance', '/maxom/current_balance?acc=cvcb', {asynchronous:true, evalScripts:true});   
+   }
+
+ 
+</script>
+
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" VLINK="#800080" ALINK="#FF0000" onLoad="show_balances()"><form name="index">
+
+Hello, <%= session[:user_name] %>&nbsp;
+<div>
+   <%=  link_to("Logout", :controller => "login", :action => "logout") %>
+</div>
+
+<div>
+   <%=  link_to("Change Password", :controller => "", :action => "change_password") %>
+</div>
+
+  <table width="97%" border="1">
+    <tr>      <td valign="top">--------&nbsp;<b>Lookup client and vendor</b>&nbsp;--------<br />
+         Lookup <a href="LookupFrame-2.jsp" target="_blank">client or Vendor</a>. 
+        <br />
+        --------&nbsp;<b>Add transaction, client, vendor etc.</b>&nbsp;-------- 
+        <br />
+        Add a <a href="/Bofw/new" target="_blank">bofw</a>  checking 
+          account transaction.<br />
+        Add a <a href="/Cvcb/new" target="_blank">cvcb</a>  checking 
+          account transaction.<br />
+         Add a <a href="/client/new" target="_blank">client</a><br />
+         Add <a href="bofw_deposit/new" target="_blank">BOFW Deposit</a> record<br />
+         Add <a href="/cvcb_deposit/new" target="_blank">CVCB Deposit</a> record<br />
+         Add <a href="Add_Employee.htm" target="_blank">Employee</a> <br />
+        Add <a href="/ohsworkorder/new" target="_blank">OHS Work Order</a><br />
+        Add <a href="/lrworkorder/new" target="_blank">LR Work Order</a><br />
+         Add <a href="/lrinvoice/new" target="_blank">LR Invoice</a><br />
+         Add <a href="/ohsinvoice/new" target="_blank">OHS Invoice</a><br />
+         Add <a href="/payable/new" target="_blank">Payable / Vendor</a><br />
+         Add a <a href="PayablesLog.jsp" target="_blank">Bill</a> to the Payable 
+          / Vendor Log <br />
+         Add a <a href="/purchaseorder/new" target="_blank">Purchase Order</a> to the order log.<br />
+        --------&nbsp;<b>View outstanding bills and Invoices</b>&nbsp;--------<br />
+         View <a href="/ohsinvoice/list"  targe="_blank"name="">OHS invoices</a><br />
+         View <a href="/lrinvoice/list" name="" targe="_blank">LR invoices</a><br />
+         All accounts (LR & OHS) are <a href="OutstandingPayables.jsp" target="_blank">here</a> 
+         <br />
+        --------&nbsp;<b>View Invoices and Workorders</b>&nbsp;--------<br />         View <a href="http://localhost:3001/workorder/list" target="_blank">All Workorders</a><br />
+         View <a href="/lsinvoice/list" target="_blank">LR Invoices</a><br />
+         View <a href="/ohsinvoice/list" target="_blank">OHS Invoices</a><br />
+      </td>
+      <td valign="top">
+<!-- At the second col.  -->
+        <p>-----------&nbsp<b>Account Balances</b>&nbsp -----------<br />
+          <%= link_to_remote("Bank of the West",
+				:update => "bofw_balance",
+				:url => {:action => "current_balance", :acc => "bofw"} ) %>
+<!-- input name="bofw_balance" type="text" value="" id="bofw_balance" style="" -->
+balance&nbsp;$<span id="bofw_balance">      </span>
+          <br />
+          <%= link_to_remote("Central Valley Community Bank ",
+				:update => 'cvcb_balance',
+				:url => {:action => "current_balance", :acc => "cvcb"} ) %>         
+balance&nbsp;$<span id="cvcb_balance">      </span>
+          <br />
+
+            <option value="null"></option>
+            <option value="bofw">Bank of the West</option>
+            <option value="cvcb">Central Valley Community Bank</option>
+          </select --> <br />
+          --------&nbsp;<b>Update items in the check register</b>&nbsp;--------<br />
+          View items that have taken place this month in <%= link_to "CVCB.", :action => "show", :acc => "cvcb", :month => "#{Time.now.month}", :year => "#{Time.now.year}", :target => "_blank" %>
+          <br />
+          View items that have taken place this month in <%= link_to "BOFTW.", :action => "show", :acc => "bofw", :month => "#{Time.now.month}", :year => "#{Time.now.year}",  :target => "_blank"  %> 
+          <br />
+          --------&nbsp;<b>Clear items in the check register</b>&nbsp;--------<br />
+          View items that have <i>not cleared</i> in <a href="/checking_account_trans/uncleared?acc=cvcb" target="_blank">CVCB</a><br />
+          View items that have <i>not cleared</i> in <a href="/checking_account_trans/uncleared?acc=bofw" target="_blank">BOFW</a> 
+        </p>
+        <p> ------------&nbsp;<b>Reconcile Accounts</b>&nbsp;------------<br />
+Reconcile&nbsp;<%= link_to("BOFW", :controller => "reconcile", :action => "show", :year => "#{Time.now.year}", :month => "#{Time.now.month}", :acc => "bofw", :view => "deposits", :sort => "clear_date") %><br />
+Reconcile&nbsp;<%= link_to("CVCB", :controller => "reconcile", :action => "show", :year => "#{Time.now.year}", :month => "#{Time.now.month}", :acc => "cvcb", :view => "deposits", :sort => "clear_date") %>
+<br />
+
+        <p> ------------&nbsp;<b>View Expenses and Income</b>&nbsp;------------<br />
+View&nbsp;<%= link_to("BOFW", :controller => "expenses", :action => "index", :year => "#{Time.now.year}", :month => "#{Time.now.month}", :acc => "bofw") %><br />
+View&nbsp;<%= link_to("CVCB", :controller => "expenses", :action => "index", :year => "#{Time.now.year}", :month => "#{Time.now.month}", :acc => "cvcb") %>
+<br />
+View&nbsp;<%= link_to("All", :controller => "expenses", :action => "index", :year => "#{Time.now.year}", :month => "#{Time.now.month}", :acc => "all") %>&nbsp;Accounts
+<br />
+        <p> ------------&nbsp;<b>Payroll Stuff</b>&nbsp;------------<br />
+          <a href="Payroll_Inhouse.jsp" target="_blank">Inhouse</a> Payroll Prep.<br />
+          Bookkeeper Print out for: <br />
+          <input type="text" name="payroll_bk" value="2004-" onChange="setViewTarget(this.value)">
+          &nbsp; <img src="../images/calendaricon.gif" onClick="toggleDatePicker('daysOfMonth','index.payroll_bk')" id="daysOfMonthPos" name="daysOfMonthPos" width="19" height="19"align="absmiddle" border="0" alt="Click to find calendar" title="Click to find calendar"> 
+        </p>
+        <div id="daysOfMonth" style="position:absolute;"></div>
+        &nbsp; 
+          <input type="button" name="View" value="View" onClick="getPayrollBookkeeper()" title="Click here to view a report.">
+        
+        <br />
+        ------------ <b>Misc</b>. ------------<br />
+
+         <a href="PhoneLog.html" target="_blank">PhoneLog.html</a> <br />
+         <a href="http://localhost:3001/officeprocedure/new" target="_blank">Input balance</a> <br />
+      </td>
+    </tr>
+  </table>
+ 
+  </form>
+  <% date=DateTime %>
+  <%= date.now %>
+</BODY>
+
+</HTML>

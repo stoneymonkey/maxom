@@ -1,0 +1,32 @@
+<%= javascript_include_tag "prototype" %>
+<script src="/javascripts/libForm.js"></script>
+
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/index.css">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="/stylesheets/style.css">
+
+<h1>Listing deposits for BOFW</h1>
+
+<table border="1">
+  <tr>
+<% for column in BofwDeposit.content_columns %>
+    <td><%= column.human_name %></td>
+<% end %>
+  </tr>
+  
+<% for transaction in @transactions %>
+  <tr>
+  <% for column in BofwDeposit.content_columns %>
+    <td><%=h transaction[column.name] %></td>
+  <% end %>
+    <td><%= link_to 'Edit', :controller => 'BofwDeposit', :action => 'edit', :id => transaction.id , :acc => 'BofwDeposit' %></td>
+    <td>
+	
+	<%= link_to_function "Delete", "delete_alert('BofwDeposit','#{transaction.id}')" %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New deposit', :action => 'new' %>

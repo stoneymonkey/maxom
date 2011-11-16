@@ -1,0 +1,35 @@
+   <tr>
+   <% @items.each do |item| %>
+      <td>
+         <%= item.id %>
+      </td>
+      <td>
+         <%= text_field("transaction_date", item.transaction_date, :value => "#{item.transaction_date}", :size => "9") %>
+     </td>
+      <td>
+         <%= text_field("clear_date", item.clear_date, :size => "9", :value => "#{item.clear_date}") %>
+      </td>
+      <td>
+         <%= text_field("amount", item.amount, :value => "#{number_to_currency(item.amount)}", :size => "10") %>
+      </td>
+      <td>
+         <%= text_field("ref_chk", item.ref_chk, :size => "10", :value => "#{item.ref_chk}") %>
+      </td>
+      <td>
+         <%= text_field("trans_type", item.trans_type, :value => "#{item.trans_type}", :size => "2") %>
+      </td>
+      <td nowrap>
+         <%= text_field("payee", item.payee, :value => "#{item.payee}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("description", item.description, :value => "#{item.description}") %>
+      </td>
+      <td nowrap>
+         <%= text_field("account_type", item.account_type, :value => "#{item.account_type}") %>
+      </td>
+      <td>
+         <%= check_box("_reconciled", item.id, {}, "yes", "no") %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>
+<% end %>
