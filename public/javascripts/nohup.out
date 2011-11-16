@@ -1,0 +1,2 @@
+ruby: No such file or directory -- script/server (LoadError)
+nohup: /Users/rails/maxomV08/.start_srv.sh: No such file or directory
